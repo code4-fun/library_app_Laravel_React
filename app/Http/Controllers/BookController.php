@@ -1,0 +1,259 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\BookRequest;
+use App\Http\Requests\XlsxRequest;
+use App\Jobs\BooksImportJob;
+use App\Jobs\CategoriesImportJob;
+use App\Models\Book;
+use App\Models\Category;
+use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Bus\Batch;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
+class BookController extends Controller{
+  /**
+   * Display a listing of the resource.
+   */
+  public function index(Request $request, $category=null){
+    $categories = Category::query()
+      ->orderBy('categories.title')
+      ->get();
+
+    if($searchQuery = $request->query('search')){
+      $allBooks = Book::query()
+        ->where('title', 'like', '%'.$searchQuery.'%')
+        ->orWhere('author', 'like', '%'.$searchQuery.'%')
+        ->orWhere('description', 'like', '%'.$searchQuery.'%')
+        ->count();
+
+      $books = Book::query()
+        ->where('title', 'like', '%'.$searchQuery.'%')
+        ->orWhere('author', 'like', '%'.$searchQuery.'%')
+        ->orWhere('description', 'like', '%'.$searchQuery.'%')
+        ->orderBy('books.created_at', 'desc')
+        ->paginate(4);
+
+      if ($request->ajax()) {
+        return view('books.parts.pages', [
+          'books' => $books,
+          'queryString' => $searchQuery,
+          'allBooks' => $allBooks
+        ])->render();
+      }
+
+      return view('books.index', [
+        'books' => $books,
+        'categories' => $categories,
+        'queryString' => $searchQuery,
+        'allBooks' => $allBooks
+      ]);
+    }
+
+    if(isset($category)){
+      if($category == 'all'){
+        return redirect()->route('index');
+      }
+      $category_item = Category::query()->where('slug', $category)->first();
+      if($category_item == null){
+        return abort(404);
+      } else {
+        $books = Book::query()
+          ->where('category_id', $category_item->id)
+          ->orderBy('books.created_at', 'desc')
+          ->paginate(4);
+      }
+
+      if ($request->ajax()) {
+        return view('books.parts.pages', [
+          'books' => $books
+        ])->render();
+      }
+
+      return view('books.index', [
+        'books' => $books,
+        'categories' => $categories
+      ]);
+    }
+
+    $books = Book::query()
+      ->orderBy('books.created_at', 'desc')
+      ->paginate(4);
+
+    if ($request->ajax()) {
+      return view('books.parts.pages', [
+        'books' => $books
+      ])->render();
+    }
+
+    return view('books.index', [
+      'books' => $books,
+      'categories' => $categories
+    ]);
+  }
+
+  /**
+   * Show the form for creating a new resource.
+   */
+  public function create(){
+    $categories = Category::query()
+      ->orderBy('categories.title')
+      ->get();
+
+    return view('books.create', [
+      'categories' => $categories
+    ]);
+  }
+
+  /**
+   * Store a newly created resource in storage.
+   */
+  public function store(BookRequest $request){
+    $book = new Book();
+    $book->title = $request->title;
+    $book->description = $request->description;
+    $book->author = $request->author;
+    $book->category_id = $request->category;
+    $book->slug = SlugService::createSlug(Book::class, 'slug', $request->title);
+    $book->rating = $request->rating;
+    if($request->file('img')){
+      $path = Storage::putFile('public/covers', $request->file('img'));
+      $url = Storage::url($path);
+      $book->cover = $url;
+    }
+
+    $book->save();
+    return redirect()
+      ->route('book.index')
+      ->with('success', 'Книга успешно создана');
+  }
+
+  /**
+   * Display the specified resource.
+   */
+  public function show(Request $request, $slug){
+    $book = DB::table('books')
+      ->join('categories', 'category_id', '=', 'categories.id')
+      ->select('books.*', 'categories.title as category_title')
+      ->where('books.slug', '=', $slug)
+      ->first();
+
+    if(!$book){
+      return redirect()
+        ->route('book.index')
+        ->withErrors('Такой страницы не существует');
+    }
+
+    if ($request->ajax()) {
+      return view('books.parts.book', [
+        'book' => $book
+      ])->render();
+    }
+
+    return view('books.show', [
+      'book' => $book
+    ]);
+  }
+
+  /**
+   * Show the form for editing the specified resource.
+   */
+  public function edit(string $slug){
+    $categories = Category::query()
+      ->orderBy('categories.title')
+      ->get();
+
+    $book = Book::query()
+      ->where('slug', $slug)
+      ->first();
+
+    if(!$book){
+      return redirect()
+        ->route('book.index')
+        ->withErrors('Такой книги не существует');
+    }
+
+    return view('books.edit', compact('book', 'categories'));
+  }
+
+  /**
+   * Update the specified resource in storage.
+   */
+  public function update(BookRequest $request, string $slug){
+    $book = Book::query()
+      ->where('slug', $slug)
+      ->first();
+
+    if(!$book){
+      return redirect()
+        ->route('book.index')
+        ->withErrors('Такой книги не существует');
+    }
+
+    $book->title = $request->title;
+    $book->description = $request->description;
+    $book->author = $request->author;
+    $book->category_id = $request->category;
+    $book->slug = SlugService::createSlug(Book::class, 'slug', $request->title);
+    $book->rating = $request->rating;
+    if($request->file('img')){
+      $path = Storage::putFile('public/covers', $request->file('img'));
+      $url = Storage::url($path);
+      $book->cover = $url;
+    }
+
+    $book->update();
+    return redirect()
+      ->route('book.show', ['slug' => $book->slug])
+      ->with('success', 'Книга успешно отредактирована');
+  }
+
+  /**
+   * Remove the specified resource from storage.
+   */
+  public function destroy(string $slug){
+    $book = Book::query()
+      ->where('slug', $slug)
+      ->first();
+
+    if(!$book){
+      return redirect()
+        ->route('book.index')
+        ->withErrors('Такой книги не существует');
+    }
+
+    unlink(public_path($book->cover));
+    $book->delete();
+
+    return redirect()
+      ->route('book.index')
+      ->with('success', 'Книга успешно удалена');
+  }
+
+  public function import(XlsxRequest $request){
+    $url = null;
+
+    if($request->file('xlsx')){
+      $path = Storage::putFile('public/import', $request->file('xlsx'));
+      $url = Storage::url($path);
+    }
+
+    Bus::batch([
+      new CategoriesImportJob($url),
+    ])->then(function(Batch $batch) use($url){
+      Bus::batch([
+        new BooksImportJob($url)
+      ])->finally(function(Batch $batch) use($url){
+        unlink(public_path($url));
+      })->dispatch();
+    })->dispatch();
+
+    return redirect()
+      ->route('book.index')
+      ->with('success', 'Загрузка книг');
+  }
+}

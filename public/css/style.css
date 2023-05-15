@@ -1,0 +1,133 @@
+.col-6 {
+  margin-bottom: 24px;
+}
+.card {
+  height: 100%;
+}
+.card__bottom {
+  display: flex;
+  margin: 0 0 16px 16px;
+}
+.card__bottom > *:not(:last-child) {
+  margin-right: 10px;
+}
+.card__img {
+  position: relative;
+  padding: 0 0 40% 0;
+}
+.card__img img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  object-fit: contain;
+}
+.card-body > *:not(:last-child){
+  margin-bottom: 10px;
+}
+.search-stat > * {
+  margin-bottom: 15px;
+}
+@media (min-width: 992px) {
+  .d-flex {
+    margin: 0;
+  }
+}
+#button-404 {
+  margin: 10px 0 0;
+}
+/* временные стили для dropdown-списка выбора компании в календаре */
+.filter_category {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+}
+#category_filter {
+    margin: 0 0 0 40px;
+}
+.calendar_category_dropdown {
+    left: -75px !important;
+}
+.calendar_category_list {
+    overflow-y: auto;
+}
+.calendar_category_list::-webkit-scrollbar {
+    border: 1px solid #9E9E9E;
+    width: 4px;
+    background: transparent;
+}
+.calendar_category_list::-webkit-scrollbar-thumb {
+    border: 1px solid #9E9E9E;
+    width: 2px;
+    background: #9E9E9E;
+}
+.calendar_category_dropdown_toggle {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: -0.011em;
+    padding-left: 5px;
+    vertical-align: top;
+    color: #323232;
+    background: 0;
+    border: 0;
+}
+.dropdown-toggle::after {
+    border-top: 1.5px solid #9E9E9E;
+    border-right: 1.5px solid #9E9E9E;
+    border-left: 0;
+    border-bottom: 0;
+    transform: rotate(135deg);
+    width: 7px;
+    height: 7px;
+    margin-left: 8px;
+}
+.dropdown-toggle.filter_arrow_up::after {
+    transform: rotate(-45deg);
+    vertical-align: baseline;
+}
+.dropdown-toggle.filter_arrow_up::after {
+    transform: rotate(-45deg);
+    vertical-align: baseline;
+}
+.custom_nav {
+    --bs-nav-link-padding-y: 0;
+}
+.custom_nav_link {
+    color: black;
+}
+.custom_nav_item {
+    margin-left: 20px;
+}
+.page {
+    flex: auto;
+    margin-top: 54px;
+    padding: 15px 0;
+}
+.header {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 10;
+}
+.card_custom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px 8px 20px;
+    margin: 0 0 10px 0;
+    border-radius: 0.375rem;
+    border: #D2D2D2 1px solid;
+}
+.card_custom_buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.card_custom_buttons > *:not(:first-child){
+    margin: 0 0 0 10px;
+}
