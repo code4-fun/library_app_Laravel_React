@@ -226,7 +226,9 @@ class BookController extends Controller{
         ->withErrors('Такой книги не существует');
     }
 
-    unlink(public_path($book->cover));
+    if($book->cover){
+      unlink(public_path($book->cover));
+    }
     $book->delete();
 
     return redirect()
