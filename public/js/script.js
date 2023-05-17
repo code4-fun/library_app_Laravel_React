@@ -3,7 +3,6 @@ $(document).ready(function(){
     $('.alert-dismissible').alert('close')
   })
 })
-
 // category dropdown handler
 $(document).on('click', '.calendar_category_filter_item', function(e){
   $('#search_book_input').val('')
@@ -19,7 +18,6 @@ $(document).on('show.bs.dropdown', '#category_dropdown_filter', function () {
 $(document).on('hide.bs.dropdown', '#category_dropdown_filter', function () {
   $('#calendar_category_filter').toggleClass('filter_arrow_up')
 })
-
 $(document).on('click', '.pagination a', function(e) {
   e.preventDefault()
   let urlParams = new URLSearchParams(window.location.search)
@@ -27,7 +25,6 @@ $(document).on('click', '.pagination a', function(e) {
   getBooks(url)
   window.history.pushState("", "", url)
 });
-
 function getBooks(url) {
   $.ajax({
     url : url
@@ -35,7 +32,6 @@ function getBooks(url) {
     $('.row').html(data)
   })
 }
-
 // search text array input handler
 let searchTimer;
 $('#search_book_input').on('input', function(){
@@ -48,7 +44,6 @@ $('#search_book_input').on('input', function(){
     window.history.pushState("", "", url)
   }, 1000);
 })
-
 // show one book
 $('.show_book').on('click', function(){
   let url = '/book/show/' + $(this).data('slug')
@@ -57,7 +52,6 @@ $('.show_book').on('click', function(){
   $('#search_book_input').hide()
   window.history.pushState("", "", url)
 })
-
 // append/remove password input in the edit user form
 $('#change_password').on('change', function(){
   if($(this).prop('checked')){
@@ -74,3 +68,47 @@ $('#change_password').on('change', function(){
     $('#password_block').remove()
   }
 })
+$('.form-check-input').on('click', function(){
+  if($(this).is(":checked")){
+    $.get(`/book/${$(this).data('slug')}/comments`,
+      function(data){
+        $('.row').after(data)
+      }
+    ).fail(function(e){
+      console.log(e.responseText)
+    })
+  } else {
+    $('.comments_container').remove()
+  }
+})
+$(document).on('click','#comment_button', function(){
+  let formData = new FormData();
+  let token = $("input[name='_token']").val();
+  formData.append('commentContent', $('.comment_textarea').val())
+  formData.append('author', $(this).data('author'))
+  formData.append("_token", '{{csrf_token()}}')
+
+  $.ajax({
+    type:'POST',
+    url:`/book/${$(this).data('slug')}/comments`,
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    dataType: 'JSON',
+    data: formData,
+    cache: false,
+    processData: false,
+  }).done(function(data) {
+    console.log('hello')
+    $('.row').after(data)
+  }).fail(function(e){
+    e.responseText
+  })
+})
+
+
+
+
+
+
+

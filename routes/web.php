@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -18,7 +19,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [BookController::class, 'index'])->name('index');
-
 Route::get('/book', [BookController::class, 'index'])->name('book.index');
 Route::get('/book/create', [BookController::class, 'create'])->name('book.create');
 Route::post('/book', [BookController::class, 'store'])->name('book.store');
@@ -27,8 +27,11 @@ Route::get('/book/edit/{slug}', [BookController::class, 'edit'])->name('book.edi
 Route::patch('/book/show/{slug}', [BookController::class, 'update'])->name('book.update');
 Route::delete('/book/{slug}', [BookController::class, 'destroy'])->name('book.destroy');
 
+Route::get('/book/{slug}/comments', [BookController::class, 'comments'])->name('book.comments.get');
+Route::post('/book/{slug}/comments', [BookController::class, 'storeComment'])->name('book.comments.store');
 Route::get('/book/{category}', [BookController::class, 'index'])->name('book.category');
 Route::post('/book/import', [BookController::class, 'import'])->name('book.import');
+
 
 Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
 Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');

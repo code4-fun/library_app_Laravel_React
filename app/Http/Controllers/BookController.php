@@ -8,6 +8,7 @@ use App\Jobs\BooksImportJob;
 use App\Jobs\CategoriesImportJob;
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\Comment;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Bus\Batch;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class BookController extends Controller{
         ->orWhere('author', 'like', '%'.$searchQuery.'%')
         ->orWhere('description', 'like', '%'.$searchQuery.'%')
         ->orderBy('books.created_at', 'desc')
-        ->paginate(4);
+        ->paginate(6);
 
       if ($request->ajax()) {
         return view('books.parts.pages', [
@@ -65,7 +66,7 @@ class BookController extends Controller{
         $books = Book::query()
           ->where('category_id', $category_item->id)
           ->orderBy('books.created_at', 'desc')
-          ->paginate(4);
+          ->paginate(6);
       }
 
       if ($request->ajax()) {
@@ -82,7 +83,7 @@ class BookController extends Controller{
 
     $books = Book::query()
       ->orderBy('books.created_at', 'desc')
-      ->paginate(4);
+      ->paginate(6);
 
     if ($request->ajax()) {
       return view('books.parts.pages', [
@@ -142,6 +143,8 @@ class BookController extends Controller{
       ->where('books.slug', '=', $slug)
       ->first();
 
+    $comments_count = Comment::where('book_id', $book->id)->count();
+
     if(!$book){
       return redirect()
         ->route('book.index')
@@ -149,14 +152,10 @@ class BookController extends Controller{
     }
 
     if ($request->ajax()) {
-      return view('books.parts.book', [
-        'book' => $book
-      ])->render();
+      return view('books.parts.book', compact('book', 'comments_count'))->render();
     }
 
-    return view('books.show', [
-      'book' => $book
-    ]);
+    return view('books.show', compact('book', 'comments_count'));
   }
 
   /**
@@ -257,5 +256,33 @@ class BookController extends Controller{
     return redirect()
       ->route('book.index')
       ->with('success', 'Загрузка книг');
+  }
+
+  public function comments(Request$request, $slug){
+    $comments = DB::table('comments')
+        ->join('books', 'book_id', '=', 'books.id')
+        ->join('users', 'author_id', '=', 'users.id')
+        ->select('comments.id', 'comments.content', 'comments.created_at', 'users.name as comment_author')
+        ->where('books.slug', '=', $slug)
+        ->orderBy('comments.created_at', 'desc')
+        ->get();
+
+    if ($request->ajax()) {
+      return view('comments.comments', compact('comments', 'slug'))->render();
+    }
+  }
+
+  public function storeComment(Request $request, $slug){
+    $book = Book::where('slug', $slug)->first();
+
+    $comment = new Comment();
+    $comment->content = $request->commentContent;
+    $comment->author_id = $request->author;
+    $comment->book_id = $book->id;
+
+    $comment->save();
+    if ($request->ajax()) {
+      return view('comments.comment', compact('comment'))->render();
+    }
   }
 }
