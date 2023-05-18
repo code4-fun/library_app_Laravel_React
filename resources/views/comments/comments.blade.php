@@ -1,15 +1,19 @@
 <div class="comments_container">
-  <div class="d-flex flex-row add-comment-section mt-4 mb-4 col-md-8">
-  <textarea class="form-control me-3 comment_textarea"
-            name="comment_textarea"
-            rows="1"
-            placeholder="Комментарий"></textarea>
-    <button class="btn btn-primary"
-            id="comment_button"
-            data-slug="{{ $slug }}"
-            data-author = "{{ Auth::user()->id }}"
-            type="button">Комментировать</button>
-  </div>
+  <form id="comment_form">
+    @csrf
+    <div class="d-flex flex-row add-comment-section mt-4 mb-4 col-md-8">
+      <textarea class="form-control me-3 comment_textarea"
+                name="comment_textarea"
+                rows="1"
+                placeholder="Комментарий"></textarea>
+      <input class="btn btn-primary"
+             id="comment_button"
+             data-slug="{{ $slug }}"
+             data-author = "{{ Auth::user()->id }}"
+             type="submit"
+             value="Комментировать">
+    </div>
+  </form>
   @foreach($comments as $comment)
     <div class="col-md-8">
       <div class="media g-mb-30 media-comment">

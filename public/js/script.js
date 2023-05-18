@@ -68,47 +68,33 @@ $('#change_password').on('change', function(){
     $('#password_block').remove()
   }
 })
+// show comments
 $('.form-check-input').on('click', function(){
   if($(this).is(":checked")){
     $.get(`/book/${$(this).data('slug')}/comments`,
       function(data){
         $('.row').after(data)
       }
-    ).fail(function(e){
-      console.log(e.responseText)
-    })
+    )
   } else {
     $('.comments_container').remove()
   }
 })
-$(document).on('click','#comment_button', function(){
-  let formData = new FormData();
-  let token = $("input[name='_token']").val();
-  formData.append('commentContent', $('.comment_textarea').val())
-  formData.append('author', $(this).data('author'))
-  formData.append("_token", '{{csrf_token()}}')
-
+// send comment
+$(document).on('click','#comment_button', function(e){
+  e.preventDefault()
   $.ajax({
     type:'POST',
     url:`/book/${$(this).data('slug')}/comments`,
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
-    dataType: 'JSON',
-    data: formData,
-    cache: false,
-    processData: false,
+    data:{
+      comment_textarea: $('.comment_textarea').val(),
+      author: $(this).data('author')
+    }
   }).done(function(data) {
-    console.log('hello')
-    $('.row').after(data)
-  }).fail(function(e){
-    e.responseText
+    $('.comment_textarea').val('')
+    $('#comment_form').after(data)
   })
 })
-
-
-
-
-
-
-

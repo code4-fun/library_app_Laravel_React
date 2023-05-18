@@ -27,7 +27,7 @@
             </form>
           @endif
           <span class="badge bg-white d-flex flex-row align-items-center">
-            <span class="text-primary">Comments ({{ $comments_count }})</span>
+            <span class="text-primary">Комментарии ({{ $comments_count }})</span>
             <div class="form-check form-switch">
               <input class="form-check-input" data-slug="{{ $book->slug }}"
                      type="checkbox" id="flexSwitchCheckChecked">

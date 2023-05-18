@@ -9,6 +9,7 @@ use App\Jobs\CategoriesImportJob;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\User;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Bus\Batch;
 use Illuminate\Http\Request;
@@ -266,7 +267,6 @@ class BookController extends Controller{
         ->where('books.slug', '=', $slug)
         ->orderBy('comments.created_at', 'desc')
         ->get();
-
     if ($request->ajax()) {
       return view('comments.comments', compact('comments', 'slug'))->render();
     }
@@ -274,15 +274,14 @@ class BookController extends Controller{
 
   public function storeComment(Request $request, $slug){
     $book = Book::where('slug', $slug)->first();
-
+    $author = User::where('id', $request->author)->first()->name;
     $comment = new Comment();
-    $comment->content = $request->commentContent;
+    $comment->content = $request->comment_textarea;
     $comment->author_id = $request->author;
     $comment->book_id = $book->id;
-
     $comment->save();
     if ($request->ajax()) {
-      return view('comments.comment', compact('comment'))->render();
+      return view('comments.comment', compact('comment', 'author'))->render();
     }
   }
 }
