@@ -161,7 +161,7 @@ a {
   box-shadow: none;
 }
 /* comment button */
-.comment_button {
+#comment_button {
   max-height: 38px;
 }
 /* comment items */
