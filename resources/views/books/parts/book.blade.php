@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row book_card">
   <div class="col-12">
     <div class="card">
       <div class="card-body">
@@ -34,7 +34,6 @@
             </div>
           </span>
         @endauth
-
       </div>
     </div>
   </div>

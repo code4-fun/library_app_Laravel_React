@@ -35,7 +35,6 @@ function getBooks(url) {
 // search text array input handler
 let searchTimer;
 $('#search_book_input').on('input', function(){
-  console.log('here')
   clearTimeout(searchTimer)
   searchTimer = setTimeout(() => {
     let url = 'http://127.0.0.1:8000?search=' + $(this).val()
@@ -69,11 +68,11 @@ $('#change_password').on('change', function(){
   }
 })
 // show comments
-$('.form-check-input').on('click', function(){
+$(document).on('click', '.form-check-input', function(){
   if($(this).is(":checked")){
     $.get(`/book/${$(this).data('slug')}/comments`,
       function(data){
-        $('.row').after(data)
+        $('.book_card').after(data)
       }
     )
   } else {
