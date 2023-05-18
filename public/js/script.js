@@ -96,5 +96,16 @@ $(document).on('click','#comment_button', function(e){
   }).done(function(data) {
     $('.comment_textarea').val('')
     $('#comment_form').after(data)
+  }).fail(function(e){
+    if (e.status === 422) {
+      $.each(e.responseJSON.errors, function (k, v) {
+        $('#comment_form').before(
+          `<div class="alert alert-danger alert-dismissible fade show col-md-8 mt-2" role="alert">
+            ${v[0]}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>`
+        )
+      });
+    }
   })
 })

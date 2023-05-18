@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BookRequest;
+use App\Http\Requests\CommentRequest;
 use App\Http\Requests\XlsxRequest;
 use App\Jobs\BooksImportJob;
 use App\Jobs\CategoriesImportJob;
@@ -272,7 +273,7 @@ class BookController extends Controller{
     }
   }
 
-  public function storeComment(Request $request, $slug){
+  public function storeComment(CommentRequest $request, $slug){
     $book = Book::where('slug', $slug)->first();
     $author = User::where('id', $request->author)->first()->name;
     $comment = new Comment();

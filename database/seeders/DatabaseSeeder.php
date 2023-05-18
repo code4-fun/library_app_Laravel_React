@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
       'author' => 'William Shakespeare',
       'description' => fake()->realText(rand(400, 500)),
       'rating' => rand(1, 10),
-      'cover' => null,
+      'cover' => '/img/hamlet.jpg',
       'category_id' => $dramaId
     ]);
 
@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
       'author' => 'Samuel Beckett',
       'description' => fake()->realText(rand(400, 500)),
       'rating' => rand(1, 10),
-      'cover' => null,
+      'cover' => '/img/waiting-for-godot.jpg',
       'category_id' => $dramaId
     ]);
 
@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
       'author' => 'Arthur Miller',
       'description' => fake()->realText(rand(400, 500)),
       'rating' => rand(1, 10),
-      'cover' => null,
+      'cover' => '/img/the-crucible.jpg',
       'category_id' => $dramaId
     ]);
 
@@ -75,7 +75,7 @@ class DatabaseSeeder extends Seeder
       'author' => 'Harper Lee',
       'description' => fake()->realText(rand(400, 500)),
       'rating' => rand(1, 10),
-      'cover' => null,
+      'cover' => '/img/to-kill-a-mockingbird.jpg',
       'category_id' => $fictionId
     ]);
 
@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
       'author' => 'George Orwell',
       'description' => fake()->realText(rand(400, 500)),
       'rating' => rand(1, 10),
-      'cover' => null,
+      'cover' => '/img/1984.jpg',
       'category_id' => $fictionId
     ]);
 
@@ -95,7 +95,7 @@ class DatabaseSeeder extends Seeder
       'author' => 'William Shakespeare',
       'description' => fake()->realText(rand(400, 500)),
       'rating' => rand(1, 10),
-      'cover' => null,
+      'cover' => '/img/romeo-and-juliet.jpg',
       'category_id' => $fictionId
     ]);
 
@@ -110,17 +110,17 @@ class DatabaseSeeder extends Seeder
       'author' => 'Arthur Conan Doyle',
       'description' => fake()->realText(rand(400, 500)),
       'rating' => rand(1, 10),
-      'cover' => null,
+      'cover' => '/img/sherlock-holmes.jpg',
       'category_id' => $detectiveId
     ]);
 
     \App\Models\Book::factory()->create([
-      'title' => 'And There Were None',
-      'slug' => 'and-there-were-none',
+      'title' => 'And Then There Were None',
+      'slug' => 'and-then-there-were-none',
       'author' => 'Agatha Christie',
       'description' => fake()->realText(rand(400, 500)),
       'rating' => rand(1, 10),
-      'cover' => null,
+      'cover' => '/img/and-then-there-were-none.jpg',
       'category_id' => $detectiveId
     ]);
 
@@ -130,7 +130,7 @@ class DatabaseSeeder extends Seeder
       'author' => 'Agatha Christie',
       'description' => fake()->realText(rand(400, 500)),
       'rating' => rand(1, 10),
-      'cover' => null,
+      'cover' => '/img/murder-on-the-orient-express.jpg',
       'category_id' => $detectiveId
     ]);
 
@@ -145,7 +145,7 @@ class DatabaseSeeder extends Seeder
       'author' => 'J.K. Rowling',
       'description' => fake()->realText(rand(400, 500)),
       'rating' => rand(1, 10),
-      'cover' => null,
+      'cover' => '/img/harry-potter-and-the-sorcerers-stone.jpg',
       'category_id' => $fantasyId
     ]);
 
@@ -155,7 +155,7 @@ class DatabaseSeeder extends Seeder
       'author' => 'J.R.R. Tolkien',
       'description' => fake()->realText(rand(400, 500)),
       'rating' => rand(1, 10),
-      'cover' => null,
+      'cover' => '/img/the-lord-of-the-rings.jpg',
       'category_id' => $fantasyId
     ]);
 
@@ -165,7 +165,7 @@ class DatabaseSeeder extends Seeder
       'author' => 'George R.R. Martin',
       'description' => fake()->realText(rand(400, 500)),
       'rating' => rand(1, 10),
-      'cover' => null,
+      'cover' => '/img/a-game-of-thrones.jpg',
       'category_id' => $fantasyId
     ]);
 
@@ -175,7 +175,7 @@ class DatabaseSeeder extends Seeder
       'author' => 'T.H. White',
       'description' => fake()->realText(rand(400, 500)),
       'rating' => rand(1, 10),
-      'cover' => null,
+      'cover' => '/img/the-sword-in-the-stone.jpg',
       'category_id' => $fantasyId
     ]);
 
@@ -185,7 +185,7 @@ class DatabaseSeeder extends Seeder
       'author' => 'C.S. Lewis',
       'description' => fake()->realText(rand(400, 500)),
       'rating' => rand(1, 10),
-      'cover' => null,
+      'cover' => '/img/the-lion-the-witch-and-the-wardrobe.jpg',
       'category_id' => $fantasyId
     ]);
   }
