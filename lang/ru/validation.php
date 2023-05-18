@@ -186,6 +186,7 @@ return [
     'description' => 'Описание',
     'img' => 'Изображение',
     'password' => 'Пароль',
+    'comment_textarea' => 'Комментарий'
   ],
 
 ];
