@@ -12,7 +12,7 @@ return new class extends Migration{
     Schema::dropIfExists('comments');
     Schema::create('comments', function (Blueprint $table){
       $table->bigIncrements('id');
-      $table->string('content');
+      $table->text('content');
       $table->timestamps();
       $table->bigInteger('author_id')->unsigned();
       $table->foreign('author_id')->references('id')->on('users');

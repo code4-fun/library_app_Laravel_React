@@ -19,7 +19,7 @@ class CommentRequest extends FormRequest{
    */
   public function rules():array{
     return [
-      'comment_textarea' => 'required|max:1000'
+      'comment_textarea' => 'required|max:2000'
     ];
   }
 }

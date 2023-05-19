@@ -149,16 +149,10 @@ a {
   font-size: inherit;
   font-weight: inherit;
 }
-.form-check-input:focus{
-  box-shadow: none;
-}
-.form-check-input{
+.form-check-input_comments{
   margin-top: 6px;
-  margin-left: -24px !important;
+  margin-left: -30px !important;
   cursor: pointer;
-}
-.form-check-input:focus{
-  box-shadow: none;
 }
 /* comment button */
 #comment_button {

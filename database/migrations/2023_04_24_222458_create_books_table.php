@@ -12,12 +12,12 @@ return new class extends Migration {
   {
     Schema::create('books', function (Blueprint $table) {
       $table->bigIncrements('id');
-      $table->string('title');
-      $table->string('slug');
-      $table->string('author');
+      $table->text('title');
+      $table->text('slug');
+      $table->text('author');
       $table->text('description')->nullable()->default(null);
       $table->smallInteger('rating')->nullable()->default(null);
-      $table->string('cover')->nullable()->default(null);
+      $table->text('cover')->nullable()->default(null);
       $table->timestamps();
       $table->smallInteger('category_id')->unsigned();
       $table->foreign('category_id')
