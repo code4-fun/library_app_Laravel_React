@@ -21,7 +21,6 @@ class BookRequest extends FormRequest{
     return [
       'title' => 'required|max:1000',
       'author' => 'required|max:5000',
-      'category' => 'required',
       'description' => 'max:2000',
       'img' => 'mimes:jpeg,jpg,png|max:2048',
       'xlsx' => 'mimes:xlsx|max:2048'

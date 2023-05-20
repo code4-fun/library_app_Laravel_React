@@ -19,7 +19,7 @@ return new class extends Migration {
       $table->smallInteger('rating')->nullable()->default(null);
       $table->text('cover')->nullable()->default(null);
       $table->timestamps();
-      $table->smallInteger('category_id')->unsigned();
+      $table->smallInteger('category_id')->unsigned()->nullable()->default(null);
       $table->foreign('category_id')
         ->references('id')
         ->on('categories');
