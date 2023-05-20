@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BookRequest;
 use App\Http\Resources\BookResource;
 use App\Models\Book;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class BookController extends Controller{
   /**
    * Display a listing of the resource.
    */
   public function index(){
-    return BookResource::collection(Book::with('category')->get());
+    return BookResource::collection(Book::all());
   }
 
   /**
@@ -27,21 +27,23 @@ class BookController extends Controller{
   /**
    * Display the specified resource.
    */
-  public function show(string $id){
-    return new BookResource(Book::with('category')->findOrFail($id));
+  public function show(Book $book){
+    return new BookResource($book);
   }
 
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, string $id){
-    //
+  public function update(BookRequest $request, Book $book){
+    $book->update($request->validated());
+    return new BookResource($book);
   }
 
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(string $id){
-    //
+  public function destroy(Book $book){
+    $book->delete();
+    return response(null, Response::HTTP_NO_CONTENT);
   }
 }

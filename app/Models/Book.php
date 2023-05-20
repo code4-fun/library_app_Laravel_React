@@ -41,7 +41,7 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model{
   use HasFactory, Sluggable;
 
-  protected $fillable = ['title', 'author', 'description', 'raging', 'created_at', 'category_id'];
+  protected $fillable = ['title', 'author', 'description', 'rating', 'created_at', 'category_id'];
 
   public function category(){
     return $this->belongsTo('App\Models\Category');

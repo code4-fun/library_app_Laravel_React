@@ -19,9 +19,12 @@ class BookRequest extends FormRequest{
    */
   public function rules():array{
     return [
-      'title' => 'required|max:1000',
-      'author' => 'required|max:5000',
+      'title' => 'sometimes|max:1000',
+      'author' => 'sometimes|max:5000',
       'description' => 'max:2000',
+      'rating' => 'max:10',
+      'created_at' => 'nullable',
+      'category_id' => 'nullable',
       'img' => 'mimes:jpeg,jpg,png|max:2048',
       'xlsx' => 'mimes:xlsx|max:2048'
     ];

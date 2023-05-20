@@ -140,7 +140,7 @@ class BookController extends Controller{
    */
   public function show(Request $request, $slug){
     $book = DB::table('books')
-      ->join('categories', 'category_id', '=', 'categories.id')
+      ->leftJoin('categories', 'category_id', '=', 'categories.id')
       ->select('books.*', 'categories.title as category_title')
       ->where('books.slug', '=', $slug)
       ->first();
