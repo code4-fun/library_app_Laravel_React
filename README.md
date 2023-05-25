@@ -96,6 +96,8 @@
   **Endpoints:**
 
   `GET /api/books` - получение всех книг
+
+  `GET /api/books/1` - получение книги с id=1
   
   `POST /api/books` - создание книги
   
