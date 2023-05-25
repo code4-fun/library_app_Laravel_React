@@ -1,7 +1,17 @@
 $(document).ready(function(){
+  // slow fade out of bootstrap alerts
   $('.alert-dismissible').fadeTo(2000, 500).slideUp(500, function(){
     $('.alert-dismissible').alert('close')
   })
+  // retention of delete books checkboxes and button on page reload
+  if(sessionStorage.getItem('delete_books') === 'yes'){
+    $('.delete_checkbox').css('display', 'block')
+    $('.delete_books_btn').css('display', 'flex')
+  }
+  // retention of search input on page reload
+  if(sessionStorage.getItem('searchString') !== ''){
+    $('#search_book_input').val(sessionStorage.getItem('searchString'))
+  }
 })
 // category dropdown handler
 $(document).on('click', '.calendar_category_filter_item', function(e){
@@ -9,36 +19,47 @@ $(document).on('click', '.calendar_category_filter_item', function(e){
   $('#calendar_category_filter').text($(this).text())
   e.preventDefault()
   let url = '/book/' + $(this).data('slug')
-  getBooks(url)
+  getBooks(url, {
+    delete_books: sessionStorage.getItem('delete_books')
+  })
   window.history.pushState("", "", url)
 })
+// category dropdown arrow up/down
 $(document).on('show.bs.dropdown', '#category_dropdown_filter', function () {
   $('#calendar_category_filter').toggleClass('filter_arrow_up')
 })
+// category dropdown arrow up/down
 $(document).on('hide.bs.dropdown', '#category_dropdown_filter', function () {
   $('#calendar_category_filter').toggleClass('filter_arrow_up')
 })
+// change page handler
 $(document).on('click', '.pagination a', function(e) {
   e.preventDefault()
   let urlParams = new URLSearchParams(window.location.search)
   let url = urlParams.has('search') ? $(this).attr('href') + '&search=' + urlParams.get('search') : $(this).attr('href')
-  getBooks(url)
+  getBooks(url, {
+    delete_books: sessionStorage.getItem('delete_books')
+  })
   window.history.pushState("", "", url)
 });
-function getBooks(url) {
+function getBooks(url, data=null) {
   $.ajax({
-    url : url
+    url : url,
+    data: data
   }).done(function(data){
     $('.row').html(data)
   })
 }
-// search text array input handler
+// search handler
 let searchTimer;
 $('#search_book_input').on('input', function(){
   clearTimeout(searchTimer)
   searchTimer = setTimeout(() => {
+    sessionStorage.setItem('searchString', $(this).val())
     let url = 'http://127.0.0.1:8000?search=' + $(this).val()
-    getBooks(url)
+    getBooks(url, {
+      delete_books: sessionStorage.getItem('delete_books')
+    })
     $('#calendar_category_filter').text('Все')
     window.history.pushState("", "", url)
   }, 1000);
@@ -107,4 +128,16 @@ $(document).on('click','#comment_button', function(e){
       });
     }
   })
+})
+// delete multiple books handler
+$(document).on('click', '#delete_books', function(e){
+  sessionStorage.getItem('delete_books') === 'yes'
+    ? sessionStorage.setItem('delete_books', 'no')
+    : sessionStorage.setItem('delete_books', 'yes')
+  $('.delete_checkbox').css('display') === 'block'
+    ? $('.delete_checkbox').css('display', 'none')
+    : $('.delete_checkbox').css('display', 'block')
+  $('.delete_books_btn').css('display') === 'flex'
+    ? $('.delete_books_btn').css('display', 'none')
+    : $('.delete_books_btn').css('display', 'flex')
 })

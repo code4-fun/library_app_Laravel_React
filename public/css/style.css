@@ -1,6 +1,26 @@
 .container {
   max-width: 970px;
 }
+.delete_books_btn {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 4px 8px;
+  min-height: 38px;
+  position: absolute;
+  top: 69px;
+  left: 9px;
+  z-index: 3;
+  background-color: #F8F9FA;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  opacity: 0.8;
+}
+.delete_books_btn:hover {
+  cursor: pointer;
+  background-color: #f3f5f5;
+}
 body{
   background:#eee;
 }
@@ -12,6 +32,15 @@ a {
 }
 .card {
   height: 100%;
+}
+.book_title {
+  display: flex;
+  justify-content: space-between;
+}
+.delete_checkbox {
+  display: none;
+  width: 20px;
+  height: 20px;
 }
 .card__bottom {
   display: flex;
@@ -46,7 +75,11 @@ a {
 #button-404 {
   margin: 10px 0 0;
 }
-/* dropdown-списка of category */
+/* navbar */
+.dropdown-item {
+  cursor: pointer;
+}
+/* dropdown of category */
 .filter_category {
   display: flex;
   flex-direction: row;

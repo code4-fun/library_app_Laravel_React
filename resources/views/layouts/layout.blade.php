@@ -40,6 +40,7 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="{{ route('book.create') }}">Добавить книгу</a></li>
+                <li><div class="dropdown-item" id="delete_books">Удалить книги</div></li>
                 <li><a class="dropdown-item" href="{{ route('category.create') }}">Добавить категорию</a></li>
                 <li><div class="dropdown-item" style="cursor:pointer" onclick="$('#xlsx').click()">Импортировать книги</div></li>
                 @if(Auth::user()->role == '0')
@@ -140,6 +141,7 @@
 </form>
 
 <div class="container">
+  <div class="delete_books_btn">Удалить</div>
   <div class="page">
     @if($errors->any())
       @foreach($errors->all() as $error)
