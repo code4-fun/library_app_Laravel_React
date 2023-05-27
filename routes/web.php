@@ -31,6 +31,7 @@ Route::get('/book/{slug}/comments', [BookController::class, 'comments'])->name('
 Route::post('/book/{slug}/comments', [BookController::class, 'storeComment'])->name('book.comments.store');
 Route::get('/book/{category}', [BookController::class, 'index'])->name('book.category');
 Route::post('/book/import', [BookController::class, 'import'])->name('book.import');
+Route::post('/books/delete', [BookController::class, 'deleteBooks'])->name('books.destroy');
 
 
 Route::get('/category', [CategoryController::class, 'index'])->name('category.index');

@@ -88,7 +88,7 @@ class BookController extends Controller{
     }
 
     $books = Book::query()
-      ->orderBy('books.created_at', 'desc')
+      ->orderByRaw('CONVERT(title, SIGNED) desc')  // orderBy('books.created_at', 'desc')  |  orderByRaw('CONVERT(title, SIGNED) desc')
       ->paginate(6);
 
     if ($request->ajax()) {
@@ -290,5 +290,31 @@ class BookController extends Controller{
     if ($request->ajax()) {
       return view('comments.comment', compact('comment', 'author'))->render();
     }
+  }
+
+  public function deleteBooks(Request $request){
+    Book::destroy($request->ids);
+
+    $categories = Category::query()
+      ->orderBy('categories.title')
+      ->get();
+
+    $books = Book::query()
+      ->orderByRaw('CONVERT(title, SIGNED) desc')
+      ->paginate(6, ['*'], 'page', $request->current_page);
+    $books->withPath('/');
+
+    if ($request->ajax()) {
+      return view('books.parts.pages', [
+        'books' => $books,
+        'delete_books' => $request->delete_books
+      ])->render();
+    }
+
+    return view('books.index', [
+      'books' => $books,
+      'categories' => $categories,
+      'delete_books' => $request->query('delete_books')
+    ]);
   }
 }

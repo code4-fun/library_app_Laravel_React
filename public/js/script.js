@@ -130,14 +130,38 @@ $(document).on('click','#comment_button', function(e){
   })
 })
 // delete multiple books handler
-$(document).on('click', '#delete_books', function(e){
-  sessionStorage.getItem('delete_books') === 'yes'
-    ? sessionStorage.setItem('delete_books', 'no')
-    : sessionStorage.setItem('delete_books', 'yes')
-  $('.delete_checkbox').css('display') === 'block'
-    ? $('.delete_checkbox').css('display', 'none')
-    : $('.delete_checkbox').css('display', 'block')
-  $('.delete_books_btn').css('display') === 'flex'
-    ? $('.delete_books_btn').css('display', 'none')
-    : $('.delete_books_btn').css('display', 'flex')
+$(document).on('click', '#delete_books', function(){
+  if(sessionStorage.getItem('delete_books') === 'yes') {
+    sessionStorage.setItem('delete_books', 'no')
+    $('.delete_checkbox').css('display', 'none').prop('checked',false)
+    $('.delete_books_btn').css('display', 'none')
+  } else {
+    sessionStorage.setItem('delete_books', 'yes')
+    $('.delete_checkbox').css('display', 'block')
+    $('.delete_books_btn').css('display', 'flex')
+  }
+})
+
+$(document).on('click', '.delete_books_btn', function(){
+  const ids = []
+  $('.delete_checkbox:checkbox:checked').each(function () {
+    ids.push($(this).data('id'))
+  })
+  const current_page = $('.page-link:not([href])').filter(function(){
+    return $(this).text() !== '...';
+  }).text()
+  $.ajax({
+    type:'POST',
+    url: '/books/delete',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+      ids: ids,
+      delete_books: sessionStorage.getItem('delete_books'),
+      current_page: current_page
+    }
+  }).done(function(data){
+    $('.row').html(data)
+  })
 })

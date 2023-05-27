@@ -23,7 +23,7 @@
         <div class="card-body">
           <div class="book_title">
             <h5 class="card-title">{{ $book->title }}</h5>
-            <input class="delete_checkbox" type="checkbox" style="{{ $delete_books == 'yes' ? 'display: block' : 'display: none' }}">
+            <input class="delete_checkbox" data-id="{{ $book->id }}" type="checkbox" style="{{ $delete_books == 'yes' ? 'display: block' : 'display: none' }}">
           </div>
           <div class="card__img">
             <img src="{{ $book->cover ?? asset('img/no_image.png') }}" class="card-img-top" alt="no image">
