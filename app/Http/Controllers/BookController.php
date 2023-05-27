@@ -46,7 +46,7 @@ class BookController extends Controller{
           'books' => $books,
           'queryString' => $searchQuery,
           'allBooks' => $allBooks,
-          'delete_books' => $request->query('delete_books')
+          'delete_books' => $request->delete_books
         ])->render();
       }
 
@@ -55,7 +55,7 @@ class BookController extends Controller{
         'categories' => $categories,
         'queryString' => $searchQuery,
         'allBooks' => $allBooks,
-        'delete_books' => $request->query('delete_books')
+        'delete_books' => $request->delete_books
       ]);
     }
 
@@ -76,14 +76,14 @@ class BookController extends Controller{
       if ($request->ajax()) {
         return view('books.parts.pages', [
           'books' => $books,
-          'delete_books' => $request->query('delete_books')
+          'delete_books' => $request->delete_books
         ])->render();
       }
 
       return view('books.index', [
         'books' => $books,
         'categories' => $categories,
-        'delete_books' => $request->query('delete_books')
+        'delete_books' => $request->delete_books
       ]);
     }
 
@@ -94,14 +94,14 @@ class BookController extends Controller{
     if ($request->ajax()) {
       return view('books.parts.pages', [
         'books' => $books,
-        'delete_books' => $request->query('delete_books')
+        'delete_books' => $request->delete_books
       ])->render();
     }
 
     return view('books.index', [
       'books' => $books,
       'categories' => $categories,
-      'delete_books' => $request->query('delete_books')
+      'delete_books' => $request->delete_books
     ]);
   }
 
