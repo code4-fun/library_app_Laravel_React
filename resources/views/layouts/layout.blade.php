@@ -28,7 +28,7 @@
     <div class="container collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 custom_nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ route('book.index') }}">
+          <a class="nav-link active main_link" aria-current="page" href="{{ route('book.index') }}">
             Главная
           </a>
         </li>

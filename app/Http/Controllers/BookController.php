@@ -38,7 +38,7 @@ class BookController extends Controller{
         ->where('title', 'like', '%'.$searchQuery.'%')
         ->orWhere('author', 'like', '%'.$searchQuery.'%')
         ->orWhere('description', 'like', '%'.$searchQuery.'%')
-        ->orderBy('books.created_at', 'desc')
+        ->orderByRaw('CONVERT(title, SIGNED) desc')
         ->paginate(6);
 
       if ($request->ajax()) {
@@ -69,7 +69,7 @@ class BookController extends Controller{
       } else {
         $books = Book::query()
           ->where('category_id', $category_item->id)
-          ->orderBy('books.created_at', 'desc')
+          ->orderByRaw('CONVERT(title, SIGNED) desc')
           ->paginate(6);
       }
 
@@ -299,10 +299,19 @@ class BookController extends Controller{
       ->orderBy('categories.title')
       ->get();
 
-    $books = Book::query()
-      ->orderByRaw('CONVERT(title, SIGNED) desc')
-      ->paginate(6, ['*'], 'page', $request->current_page);
-    $books->withPath('/');
+    if($request->category != 'all'){
+      $category_item = Category::query()->where('slug', $request->category)->first();
+      $books = Book::query()
+        ->where('category_id', $category_item->id)
+        ->orderByRaw('CONVERT(title, SIGNED) desc')
+        ->paginate(6, ['*'], 'page', $request->current_page)
+        ->withPath('/book/'.$request->category);
+    } else {
+      $books = Book::query()
+        ->orderByRaw('CONVERT(title, SIGNED) desc')
+        ->paginate(6, ['*'], 'page', $request->current_page)
+        ->withPath('/');
+    }
 
     if ($request->ajax()) {
       return view('books.parts.pages', [

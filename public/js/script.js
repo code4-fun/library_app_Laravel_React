@@ -17,6 +17,7 @@ $(document).ready(function(){
 $(document).on('click', '.calendar_category_filter_item', function(e){
   $('#search_book_input').val('')
   $('#calendar_category_filter').text($(this).text())
+  sessionStorage.setItem('category', $(this).data('slug'))
   e.preventDefault()
   let url = '/book/' + $(this).data('slug')
   getBooks(url, {
@@ -129,7 +130,7 @@ $(document).on('click','#comment_button', function(e){
     }
   })
 })
-// delete multiple books handler
+// delete multiple books menu. Show/hide checkboxes and delete button
 $(document).on('click', '#delete_books', function(){
   if(sessionStorage.getItem('delete_books') === 'yes') {
     sessionStorage.setItem('delete_books', 'no')
@@ -141,7 +142,7 @@ $(document).on('click', '#delete_books', function(){
     $('.delete_books_btn').css('display', 'flex')
   }
 })
-
+// delete multiple books button. Delete selected books from DB, refresh view (no page reload)
 $(document).on('click', '.delete_books_btn', function(){
   const ids = []
   $('.delete_checkbox:checkbox:checked').each(function () {
@@ -159,9 +160,13 @@ $(document).on('click', '.delete_books_btn', function(){
     data: {
       ids: ids,
       delete_books: sessionStorage.getItem('delete_books'),
-      current_page: current_page
+      current_page: current_page,
+      category: sessionStorage.getItem('category')
     }
   }).done(function(data){
     $('.row').html(data)
   })
+})
+$('.main_link').on('click', function(){
+  sessionStorage.setItem('searchString', '')
 })
