@@ -14,9 +14,9 @@ $(document).ready(function(){
   }
 })
 // category dropdown handler
-$(document).on('click', '.calendar_category_filter_item', function(e){
+$(document).on('click', '.category_filter_item', function(e){
   $('#search_book_input').val('')
-  $('#calendar_category_filter').text($(this).text())
+  $('.category_dropdown_toggle').text($(this).text())
   sessionStorage.setItem('category', $(this).data('slug'))
   e.preventDefault()
   let url = '/book/' + $(this).data('slug')
@@ -27,11 +27,11 @@ $(document).on('click', '.calendar_category_filter_item', function(e){
 })
 // category dropdown arrow up/down
 $(document).on('show.bs.dropdown', '#category_dropdown_filter', function () {
-  $('#calendar_category_filter').toggleClass('filter_arrow_up')
+  $('.category_dropdown_toggle').toggleClass('filter_arrow_up')
 })
 // category dropdown arrow up/down
 $(document).on('hide.bs.dropdown', '#category_dropdown_filter', function () {
-  $('#calendar_category_filter').toggleClass('filter_arrow_up')
+  $('.category_dropdown_toggle').toggleClass('filter_arrow_up')
 })
 // change page handler
 $(document).on('click', '.pagination a', function(e) {
@@ -61,7 +61,7 @@ $('#search_book_input').on('input', function(){
     getBooks(url, {
       delete_books: sessionStorage.getItem('delete_books')
     })
-    $('#calendar_category_filter').text('Все')
+    $('.category_dropdown_toggle').text('Все')
     window.history.pushState("", "", url)
   }, 1000);
 })

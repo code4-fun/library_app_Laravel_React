@@ -70,14 +70,14 @@
               <div class="filter_category">
                 <span class="filter_label">Категория:</span>
                 <div class="dropdown" id="category_dropdown_filter" style="height: 20px;">
-                  <button class="dropdown-toggle calendar_category_dropdown_toggle"
-                          id="calendar_category_filter" data-bs-toggle="dropdown">Все
+                  <button class="dropdown-toggle category_dropdown_toggle" data-bs-toggle="dropdown">
+                    Все
                   </button>
-                  <div class="dropdown-menu calendar_category_dropdown" id="calendar_category_filter_list" aria-labelledby="calendar_category_filter">
-                    <div class="calendar_category_list">
-                      <button class="dropdown-item p2 calendar_category_filter_item" data-slug="all">Все</button>
+                  <div class="dropdown-menu category_dropdown">
+                    <div class="category_list">
+                      <button class="dropdown-item p2 category_filter_item" data-slug="all">Все</button>
                       @foreach($categories as $category)
-                        <button class="dropdown-item p2 calendar_category_filter_item"
+                        <button class="dropdown-item p2 category_filter_item"
                                 data-slug="{{ $category->slug }}">{{ $category->title }}</button>
                       @endforeach
                     </div>

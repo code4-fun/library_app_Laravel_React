@@ -89,23 +89,23 @@ a {
 #category_filter {
   margin: 0 0 0 40px;
 }
-.calendar_category_dropdown {
+.category_dropdown {
   left: -75px !important;
 }
-.calendar_category_list {
+.category_list {
   overflow-y: auto;
 }
-.calendar_category_list::-webkit-scrollbar {
+.category_list::-webkit-scrollbar {
   border: 1px solid #9E9E9E;
   width: 4px;
   background: transparent;
 }
-.calendar_category_list::-webkit-scrollbar-thumb {
+.category_list::-webkit-scrollbar-thumb {
   border: 1px solid #9E9E9E;
   width: 2px;
   background: #9E9E9E;
 }
-.calendar_category_dropdown_toggle {
+.category_dropdown_toggle {
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
