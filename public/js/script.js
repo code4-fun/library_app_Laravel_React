@@ -1,4 +1,10 @@
 $(document).ready(function(){
+  if(window.location.href.indexOf('/category') != -1) {
+    $('.category_dropdown_toggle').text(sessionStorage.getItem('category').substr(sessionStorage.getItem('category').indexOf('<<>>') + 4))
+  } else {
+    sessionStorage.setItem('category', `all`)
+  }
+
   // slow fade out of bootstrap alerts
   $('.alert-dismissible').fadeTo(2000, 500).slideUp(500, function(){
     $('.alert-dismissible').alert('close')
@@ -17,9 +23,9 @@ $(document).ready(function(){
 $(document).on('click', '.category_filter_item', function(e){
   $('#search_book_input').val('')
   $('.category_dropdown_toggle').text($(this).text())
-  sessionStorage.setItem('category', $(this).data('slug'))
+  sessionStorage.setItem('category', `${$(this).data('slug')}<<>>${$(this).text()}`)
   e.preventDefault()
-  let url = '/book/' + $(this).data('slug')
+  let url = '/book/category/' + $(this).data('slug')
   getBooks(url, {
     delete_books: sessionStorage.getItem('delete_books')
   })
@@ -161,7 +167,7 @@ $(document).on('click', '.delete_books_btn', function(){
       ids: ids,
       delete_books: sessionStorage.getItem('delete_books'),
       current_page: current_page,
-      category: sessionStorage.getItem('category')
+      category: sessionStorage.getItem('category').substring(0, sessionStorage.getItem('category').indexOf('<<>>'))
     }
   }).done(function(data){
     $('.row').html(data)

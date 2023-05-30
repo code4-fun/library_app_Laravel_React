@@ -37,7 +37,7 @@ class CategoryController extends Controller
 
     $category->save();
     return redirect()
-      ->route('category.index')
+      ->route('categories.index')
       ->with('success', 'Категория успешно создана');
   }
 
@@ -57,7 +57,7 @@ class CategoryController extends Controller
 
     if(!$category){
       return redirect()
-        ->route('category.index')
+        ->route('categories.index')
         ->withErrors('Такой категории не существует');
     }
 
@@ -74,7 +74,7 @@ class CategoryController extends Controller
 
     if(!$category){
       return redirect()
-        ->route('category.index')
+        ->route('categories.index')
         ->withErrors('Такой категории не существует');
     }
 
@@ -83,7 +83,7 @@ class CategoryController extends Controller
 
     $category->update();
     return redirect()
-      ->route('category.index')
+      ->route('categories.index')
       ->with('success', 'Категория успешно отредактирована');
   }
 
@@ -97,11 +97,11 @@ class CategoryController extends Controller
 
     if(!$category){
       return redirect()
-        ->route('category.index')
+        ->route('categories.index')
         ->withErrors('Такой категории не существует');
     }
 
     $category->delete();
-    return redirect()->route('category.index');
+    return redirect()->route('categories.index');
   }
 }

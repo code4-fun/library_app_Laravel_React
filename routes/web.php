@@ -29,18 +29,18 @@ Route::delete('/book/{slug}', [BookController::class, 'destroy'])->name('book.de
 
 Route::get('/book/{slug}/comments', [BookController::class, 'comments'])->name('book.comments.get');
 Route::post('/book/{slug}/comments', [BookController::class, 'storeComment'])->name('book.comments.store');
-Route::get('/book/{category}', [BookController::class, 'index'])->name('book.category');
+Route::get('/book/category/{category}', [BookController::class, 'index'])->name('book.category');
 Route::post('/book/import', [BookController::class, 'import'])->name('book.import');
 Route::post('/books/delete', [BookController::class, 'deleteBooks'])->name('books.destroy');
 
 
-Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
-Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
-Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
-Route::get('/category/show/{slug}', [CategoryController::class, 'show'])->name('category.show');
-Route::get('/category/edit/{slug}', [CategoryController::class, 'edit'])->name('category.edit');
-Route::patch('/category/show/{slug}', [CategoryController::class, 'update'])->name('category.update');
-Route::delete('/category/{slug}', [CategoryController::class, 'destroy'])->name('category.destroy');
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+Route::get('/categories/show/{slug}', [CategoryController::class, 'show'])->name('categories.show');
+Route::get('/categories/edit/{slug}', [CategoryController::class, 'edit'])->name('categories.edit');
+Route::patch('/categories/show/{slug}', [CategoryController::class, 'update'])->name('categories.update');
+Route::delete('/categories/{slug}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
 Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.index');
 Route::get('/employee/create', [EmployeeController::class, 'create'])->name('employee.create');

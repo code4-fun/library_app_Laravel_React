@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <form action="{{ route('category.update', ['slug' => $category->slug]) }}" method="post">
+    <form action="{{ route('categories.update', ['slug' => $category->slug]) }}" method="post">
         @csrf
         @method('patch')
         <h3>Редактировать категорию</h3>

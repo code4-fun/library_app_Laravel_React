@@ -41,7 +41,7 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="{{ route('book.create') }}">Добавить книгу</a></li>
                 <li><div class="dropdown-item" id="delete_books">Удалить книги</div></li>
-                <li><a class="dropdown-item" href="{{ route('category.create') }}">Добавить категорию</a></li>
+                <li><a class="dropdown-item" href="{{ route('categories.create') }}">Добавить категорию</a></li>
                 <li><div class="dropdown-item" style="cursor:pointer" onclick="$('#xlsx').click()">Импортировать книги</div></li>
                 @if(Auth::user()->role == '0')
                   <li><a class="dropdown-item" href="{{ route('employee.create') }}">Добавить сотрудника</a></li>
@@ -56,7 +56,7 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="{{ route('book.index') }}">Список книг</a></li>
-                <li><a class="dropdown-item" href="{{ route('category.index') }}">Список категорий</a></li>
+                <li><a class="dropdown-item" href="{{ route('categories.index') }}">Список категорий</a></li>
                 @if(Auth::user()->role == '0')
                   <li><a class="dropdown-item" href="{{ route('employee.index') }}">Список сотрудников</a></li>
                 @endif
