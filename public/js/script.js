@@ -1,10 +1,10 @@
 $(document).ready(function(){
+  // preserve selected category on page reload. else is activated when other then category link is clicked
   if(window.location.href.indexOf('/category') != -1) {
     $('.category_dropdown_toggle').text(sessionStorage.getItem('category').substr(sessionStorage.getItem('category').indexOf('<<>>') + 4))
   } else {
     sessionStorage.setItem('category', `all`)
   }
-
   // slow fade out of bootstrap alerts
   $('.alert-dismissible').fadeTo(2000, 500).slideUp(500, function(){
     $('.alert-dismissible').alert('close')
@@ -72,7 +72,7 @@ $('#search_book_input').on('input', function(){
   }, 1000);
 })
 // show one book
-$('.show_book').on('click', function(){
+$(document).on('click', '.show_book', function(){
   let url = '/book/show/' + $(this).data('slug')
   getBooks(url)
   $('#category_filter').hide()

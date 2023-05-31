@@ -141,7 +141,9 @@
 </form>
 
 <div class="container">
-  <div class="delete_books_btn">Удалить</div>
+  @auth
+    <div class="delete_books_btn">Удалить</div>
+  @endauth
   <div class="page">
     @if($errors->any())
       @foreach($errors->all() as $error)
