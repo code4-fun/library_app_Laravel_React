@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class BookController extends Controller{
+class BookController extends Controller{ // test
   /**
    * Display a listing of the resource.
    */
