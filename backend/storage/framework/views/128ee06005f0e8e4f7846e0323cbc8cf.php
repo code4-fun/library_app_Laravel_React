@@ -1,0 +1,10 @@
+<h3>Данные для входа в Library app</h3>
+<div>
+  <b>Логин: </b>
+  <a style="pointer-events:none; cursor:default; text-decoration:none; color:black;"><?php echo e($email); ?></a>
+</div>
+<div>
+  <b>Пароль: </b>
+  <span><?php echo e($password); ?></span>
+</div>
+<?php /**PATH E:\Comp\second_degree\jh\52_медкорт\projects\library-laravel\resources\views/emails/employeeCreated.blade.php ENDPATH**/ ?>
