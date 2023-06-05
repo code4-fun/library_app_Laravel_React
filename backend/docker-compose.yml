@@ -2,7 +2,7 @@ version: '2'
 services:
     nginx:
         build:
-            context: ..
+            context: ./
             dockerfile: docker/nginx/nginx.docker
         volumes:
             - ./:/var/www
@@ -12,7 +12,7 @@ services:
             - php-fpm
     php-fpm:
         build:
-            context: ..
+            context: ./
             dockerfile: docker/php/php-fpm.docker
         volumes:
             - ./:/var/www
@@ -25,7 +25,7 @@ services:
             - "DB_HOST=mysql"
     php-cli:
         build:
-            context: ..
+            context: ./
             dockerfile: docker/php/php-cli.docker
         volumes:
             - ./:/var/www
